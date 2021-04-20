@@ -1,0 +1,10 @@
+USE GRAPH KG
+DROP QUERY PaperOutdegree
+CREATE QUERY PaperOutdegree( ) FOR GRAPH KG{
+Start={Paper.*};
+v=SELECT s from Start:s where s.outdegree()==0 limit 3;
+Print v;
+}
+Install query PaperOutdegree
+Run query PaperOutdegree()
+

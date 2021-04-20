@@ -1,0 +1,14 @@
+Use graph KG
+drop query Output_P2J2Ycount
+CREATE QUERY Output_P2J2Ycount(String fileLocation) FOR GRAPH KG
+{
+
+FILE f1 (fileLocation);
+
+start1={Paper.*};
+result=select s from start1:s 
+     ACCUM f1.println(s.PaperId,s.ISSN,s.Year);
+
+}
+install query Output_P2J2Ycount
+run query Output_P2J2Ycount("/home/tigergraph/0923_P2J2Y.txt")

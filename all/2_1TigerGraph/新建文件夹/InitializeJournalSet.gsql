@@ -1,0 +1,19 @@
+USE GRAPH KG
+CREATE QUERY InitJNet5() FOR GRAPH KG{
+SetAccum<Vertex<Journal>> @@JournalFromSet,@@JournalToSet;
+INT i;
+Start=Journal.*; 
+#select all Journal vertices
+v=SELECT s from Start:s Accum @@JournalFromSet+=s;
+Print @@JournalFromSet.size();
+@@JournalToSet=@@JournalFromSet;
+
+# Edges insertion
+Foreach JournalFrom in @@JournalFromSet  DO
+     Foreach Journalto in @@JournalToSet  DO
+      i=i+1;
+     END;
+END;
+print i;
+}
+

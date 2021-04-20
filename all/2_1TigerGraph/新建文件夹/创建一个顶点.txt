@@ -1,0 +1,51 @@
+使用CREATE VERTEX命令定义一个名为person的顶点类型。这里，PRIMARY_ID是必需的:每个人都必须有一个唯一的标识符。其余部分是描述每个人顶点的可选属性列表，格式为attribute_name data_type, attribute_name data_type，..
+
+
+CREATE VERTEX person (
+PRIMARY_ID name STRING, 
+name STRING, age INT, 
+gender STRING, state STRING
+)
+
+
+接下来，使用CREATE…EDGE命令创建一个名为friendship的EDGE类型。无定向的关键字表示这条边是双向边，这意味着信息可以从两个顶点开始流。如果您希望有一个单向连接，其中信息只从顶点流动，那么使用有向关键字代替无向关键字。这里，FROM和TO被要求指定边缘类型连接的两个顶点类型。一个单独的边通过给出它的源(从)顶点和目标(到)顶点的primary_id来指定。这些属性后面是可选的属性列表，就像顶点定义一样。
+
+
+CREATE UNDIRECTED EDGE friendship (FROM person, TO person, connect_day DATETIME)
+
+
+#使用CREATE VERTEX命令定义顶点类型
+CREATE VERTEX Paper(
+	PRIMARY_ID Paper_Id INT,
+	Paper_Title STRING, Paper_doi STRING, 
+	Paper_rank INT,Paper_year INT
+) WITH STATS="OUTDEGREE_BY_EDGETYPE"
+
+
+CREATE VERTEX Journal(
+	PRIMARY_ID ISSN STRING, 
+	Jourual_Id_M INT,Jourual_Id_S INT, 
+	Journal_Title STRING,Journal_country STRING
+) WITH STATS="OUTDEGREE_BY_EDGETYPE"
+
+
+CREATE VERTEX subDiscipline(
+	PRIMARY_ID subDiscipline_Id INT, 
+	subDiscipline_name STRING
+) WITH STATS="OUTDEGREE_BY_EDGETYPE"
+
+CREATE VERTEX Discipline(
+	PRIMARY_ID Discipline_Id INT, 
+	Discipline_name STRING
+) WITH STATS="OUTDEGREE_BY_EDGETYPE"
+
+
+# 使用CREATE…EDGE命令，DIRECTED为创建有向边，UNDIRECTED为创建无向边     CREATE DIRECTED EDGE Paper_ref_Paper(FROM Paper, TO Paper)
+CREATE DIRECTED EDGE Paper_public_Journal(FROM Paper, TO Journal)
+CREATE DIRECTED EDGE Journal_ref_Journal(FROM Journal, TO Journal, Journal_refCount INT)
+CREATE DIRECTED EDGE Journal_research_subDiscipline(FROM Journal, TO subDiscipline, research_weight FLOAT)
+CREATE DIRECTED EDGE subDiscipline_ref_subDiscipline(FROM subDiscipline, TO subDiscipline, subDiscipline_refCount INT)
+CREATE DIRECTED EDGE subDiscipline_belong_to_Discipline(FROM subDiscipline, TO Discipline)
+CREATE DIRECTED EDGE Discipline_ref_Discipline(FROM Discipline, TO Discipline, Discipline_refCount INT)
+
+Create graph KG(*)

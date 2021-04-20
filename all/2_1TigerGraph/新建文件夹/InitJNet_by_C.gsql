@@ -1,0 +1,12 @@
+use graph gsql_demo
+
+Drop query InitJNet_by_C
+CREATE QUERY InitJNet_by_C(Vertex<Journal> Vid) FOR GRAPH gsql_demo
+{
+ To_Vertex={Journal.*};
+ result_end=select t from To_Vertex:t Accum Insert into Journa2Journal values(Vid, t, 0);
+}
+
+install query InitJNet_by_C
+#run query  InitJNet_by_C("J1")
+

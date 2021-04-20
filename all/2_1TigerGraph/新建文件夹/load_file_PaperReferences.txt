@@ -1,0 +1,15 @@
+USE GRAPH KG
+ CREATE LOADING JOB load_KG_PaperReferences_test FOR GRAPH KG {
+#      DEFINE FILENAME file_Paper2Journal = "/home/zhenhua/data/MAG20190615/mag/Paper2Journal/Paper2ISSN_20200202.txt";
+#      DEFINE FILENAME file_Journal2Field = "/home/zhenhua/data/Journal_list/FromJournalToCatalogues_20200201.txt";
+#      DEFINE FILENAME file_Field = "/home/zhenhua/data/Journal_list/JournalFields.txt";
+#      DEFINE FILENAME file_Journal = "/home/zhenhua/data/Journal_list/JournalList_20200201.txt";
+      DEFINE FILENAME file_Paper2Paper = "/home/zhenhua/data/PaperReferences_test.txt";
+#      DEFINE FILENAME file_Field2Field = "/home/zhenhua/data/Journal_list/FieldsBelongTo.txt";
+#      LOAD file_Journal TO VERTEX Journal VALUES($0, $0, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10) USING SEPARATOR=",", HEADER="true", EOL="\n";
+#      LOAD file_Field TO VERTEX Field VALUES($0,$0, $1) USING SEPARATOR="	", HEADER="true", EOL="\n";
+      LOAD file_Paper2Paper TO EDGE Paper2Paper VALUES($0, $1) USING SEPARATOR="	", HEADER="false", EOL="\n";
+#      LOAD file_Paper2Journal TO EDGE Paper2Journal VALUES($0, $1) USING SEPARATOR=";", HEADER="true", EOL="\n";
+#      LOAD file_Journal2Field TO EDGE Journal2Field VALUES($0, $1) USING SEPARATOR=",", HEADER="true", EOL="\n";
+#      LOAD file_Field2Field TO EDGE Field2Field VALUES($0, $1) USING SEPARATOR="	", HEADER="true", EOL="\n";
+    }

@@ -1,0 +1,8 @@
+USE GRAPH KG
+CREATE SCHEMA_CHANGE JOB add_edges FOR GRAPH KG {
+    ADD DIRECTED EDGE Journal2Journal(FROM Journal, TO Journal, RefCount INT);
+    ADD DIRECTED EDGE Journal2Field(FROM Journal, TO Field, JournalCount INT);
+    ADD DIRECTED EDGE Field2Field(FROM Field, TO Field, FieldCount INT);
+}
+RUN JOB add_edges
+

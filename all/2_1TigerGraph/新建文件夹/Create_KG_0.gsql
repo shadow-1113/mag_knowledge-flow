@@ -1,0 +1,13 @@
+CREATE VERTEX Paper(PRIMARY_ID PaperId INT,PaperId INT, DocType STRING, PaperTitle STRING, BookTitle STRING, Year INT, PaperDate DATETIME, Publisher STRING, JournalId INT, ConferenceSeriesId INT, ConferenceInstanceId INT, Volume INT, Issue INT, Pages INT, ReferenceCount INT, CitationCount INT, OriginalVenue STRING) WITH STATS="OUTDEGREE_BY_EDGETYPE"
+CREATE VERTEX Journal(PRIMARY_ID ISSN STRING, ISSN STRING,Sourcerecord INT, SourceTitle STRING, EISSN STRING, ActiveorInactive STRING, Coverage STRING, Articlelanguage STRING, OpenAccessstatus STRING, SourceType STRING, PublishersName STRING, PublishersCountry STRING) WITH STATS="OUTDEGREE_BY_EDGETYPE"
+CREATE VERTEX Field(PRIMARY_ID FieldId INT,FieldId INT,  FieldName STRING) WITH STATS="OUTDEGREE_BY_EDGETYPE"
+
+                                                                                                    
+CREATE DIRECTED EDGE Paper2Paper(FROM Paper, TO Paper)
+CREATE DIRECTED EDGE Paper2Journal(FROM Paper, TO Journal)
+CREATE DIRECTED EDGE Journal2Journal(FROM Journal, TO Journal, RefCount INT)
+CREATE DIRECTED EDGE Journal2Field(FROM Journal, TO Field, RefCount INT)
+CREATE DIRECTED EDGE Field2Field(FROM Field, TO Field, RefCount INT)
+
+Create graph KG(*)
+

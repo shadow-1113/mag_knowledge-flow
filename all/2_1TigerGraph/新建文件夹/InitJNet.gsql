@@ -1,0 +1,10 @@
+Use GRAPH KG
+Drop query InitJNet
+CREATE QUERY InitJNet() FOR GRAPH KG
+{
+start={Journal.*};
+result = select s from start:s Accum  InitJNet_by_J(s);
+}
+Install query InitJNet
+run query InitJNet()
+

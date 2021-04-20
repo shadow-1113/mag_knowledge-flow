@@ -1,0 +1,12 @@
+USE GRAPH KG
+DROP QUERY SearchEdge
+CREATE QUERY SearchEdge(INT i) FOR GRAPH KG{
+start={Paper.*}; 
+eend = {Paper.*};
+results1=SELECT t from start:s-(Paper2Paper:e)->:t where s.PaperId==i;
+Print results1;
+#results2=select ss from :ss-(Paper2Paper:ee)->:tt where tt.PaperId==i;
+#Print results2;
+}
+Install query SearchEdge
+

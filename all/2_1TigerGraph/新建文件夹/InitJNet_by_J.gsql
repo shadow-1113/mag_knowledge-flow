@@ -1,0 +1,12 @@
+use graph KG 
+
+Drop query InitJNet_by_J
+CREATE QUERY InitJNet_by_J(Vertex<Journal> Vid) FOR GRAPH KG
+{
+ To_Vertex={Journal.*};
+ result_end=select t from To_Vertex:t Accum Insert into Journal2Journal values(Vid, t, 0);
+}
+
+install query InitJNet_by_J
+run query  InitJNet_by_J("1380-2038")
+

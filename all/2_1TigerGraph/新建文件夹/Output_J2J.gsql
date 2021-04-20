@@ -1,0 +1,36 @@
+Use graph KG
+drop query Output_F2F
+CREATE QUERY Output_F2F(String fileLocation) FOR GRAPH KG
+{
+TYPEDEF TUPLE <To_Journal Vertex<Journal>, iCount INT > T_To_J;
+SetAccum<Vertex<Journal>>   @@VSet;
+BagAccum<T_To_J> @@To_J;
+BagAccum<INT> @@iCount;
+ BagAccum<Vertex<Field>> @@From_F,@@To_F;
+FILE f1 (fileLocation);
+start1={Field.*};
+result=select s from start1:s 
+     ACCUM @@VSet+=s;
+
+Foreach item in @@VSet Do
+  @@From_F.clear();
+  @@To_F.clear; 
+  @To_J.clear();
+
+  start2={item};
+  result1=Select t1 from start2:s-(J2F)->:t1 Accum @@From_F+=t1;
+  result2=Select t2 from start2:s-(J2J:e)->:t2 Accum @@To_J+=T_To_J(t2,e.RefCount);
+       Foreach item_To_J in @@To_J Do
+          start3={item_To_J.To_Journal};
+          @@To_F.clear();
+          result3=Select t3 from start3:s3-(J2F)->:t3;
+          Foreach item_To_F in result3 Do
+             Foreach item_From_F in @@From_F Do
+                print item_From.FieldId, item_To_F.FieldID,item_To_J.iCount TO_CSV f1;
+             End;
+         End;
+      End;
+End;
+}
+install query Output_J2J
+run query Output_J2J("/home/tigergraph/data/F2F.csv")
